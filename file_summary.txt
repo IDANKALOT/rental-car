@@ -1,0 +1,24 @@
+costa_drive_club_app.jsx — 1,262 lines, a complete React SPA for a Scandinavian car rental company in Spain called Costa Drive Club.
+
+Structure:
+- Single exported App component with all state managed in-memory via useState
+- No routing library — uses a view string state to switch between pages
+- No CSS files — all styling is inline + a GlobalStyle component that injects a <style> tag
+
+Pages / views:
+- home — Hero with booking widget, car showcase, why-us, reviews, destinations, FAQ, CTA
+- cars — Full car listing with category filter
+- destinations — Destination cards (Málaga, Alicante, Barcelona, etc.)
+- contact — Contact form + Google Maps embed + WhatsApp button
+- login — Login/register (demo, in-memory)
+- account — Booking history for logged-in user
+- admin — Car fleet CRUD panel (add/edit/delete/hide cars, image upload or URL, pricing tiers)
+
+Key features:
+- 6-language support: Danish, English, Swedish, Norwegian, German, Spanish
+- Dynamic pricing: base price, weekly discount price (7+ days), high-season price (July–August)
+- Booking modal with simulated payment flow (card/Stripe/PayPal)
+- WhatsApp chat widget
+- Admin panel with live car card preview
+
+Design: Dark luxury aesthetic, gold (#c8963c) accents, Cormorant Garamond serif + DM Sans.

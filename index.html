@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary SEO -->
+    <title>Costa Drive Club – Biludlejning i Spanien | Málaga, Marbella, Barcelona</title>
+    <meta name="description" content="Lej bil i Spanien til de bedste priser. Dansk kundeservice, ingen skjulte gebyrer, gratis afbestilling. Afhentning i Málaga, Marbella og hele Spanien." />
+    <meta name="keywords" content="biludlejning spanien, lej bil malaga, billeje spanien, car rental spain, hyrbil spanien, leie bil spania, mietwagen spanien" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.costadriveclub.es/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.costadriveclub.es/" />
+    <meta property="og:title" content="Costa Drive Club – Premium biludlejning i Spanien" />
+    <meta property="og:description" content="Lej din drømmebil i Spanien. Dansk support, gennemsigtige priser, 500+ biler. Málaga · Marbella · Barcelona · Alicante." />
+    <meta property="og:image" content="https://www.costadriveclub.es/og-image.jpg" />
+    <meta property="og:locale" content="da_DK" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:locale:alternate" content="sv_SE" />
+    <meta property="og:locale:alternate" content="nb_NO" />
+    <meta property="og:site_name" content="Costa Drive Club" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Costa Drive Club – Biludlejning i Spanien" />
+    <meta name="twitter:description" content="Lej bil i Spanien. Dansk kundeservice, ingen skjulte gebyrer." />
+    <meta name="twitter:image" content="https://www.costadriveclub.es/og-image.jpg" />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#c8963c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Costa Drive Club" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+
+    <!-- Local Business Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CarRental",
+      "name": "Costa Drive Club",
+      "description": "Premium car rental in Spain with Scandinavian-language customer service",
+      "url": "https://www.costadriveclub.es",
+      "telephone": "+34600000000",
+      "email": "hej@costadriveclub.es",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Cash, Credit Card",
+      "openingHours": "Mo-Su 08:00-22:00",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avenida del Mar 24",
+        "addressLocality": "Marbella",
+        "addressRegion": "Málaga",
+        "postalCode": "29602",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "36.5101",
+        "longitude": "-4.8824"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "2847",
+        "bestRating": "5"
+      },
+      "hasMap": "https://maps.google.com/?q=Marbella,Spain",
+      "areaServed": [
+        "Málaga", "Marbella", "Barcelona", "Alicante", "Mallorca", "Sevilla"
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>
