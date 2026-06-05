@@ -81,18 +81,10 @@ export default function WhatsApp() {
         </div>
       )}
 
-      {/* Floating buttons row */}
-      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        {/* Call button */}
-        <a href="tel:+34600000000">
-          <button className="wa-btn" style={{ width: 48, height: 48, borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold), var(--gold-light))', border: 'none', cursor: 'pointer', fontSize: 20, boxShadow: 'var(--shadow-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>📞</button>
-        </a>
-
-        {/* WhatsApp button */}
-        <button className="wa-btn pulse" onClick={() => setShowWhatsApp((s) => !s)} style={{ width: 56, height: 56, borderRadius: '50%', background: '#25D366', border: 'none', cursor: 'pointer', fontSize: 26, boxShadow: '0 4px 20px rgba(37,211,102,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          💬
-        </button>
-      </div>
+      {/* WhatsApp floating button */}
+      <button className="wa-btn pulse" onClick={() => setShowWhatsApp((s) => !s)} style={{ width: 56, height: 56, borderRadius: '50%', background: '#25D366', border: 'none', cursor: 'pointer', fontSize: 26, boxShadow: '0 4px 20px rgba(37,211,102,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        💬
+      </button>
     </div>
   );
 }

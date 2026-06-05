@@ -47,7 +47,7 @@ export default function GlobalStyle() {
 
         /* Typography */
         --font-serif: 'Fraunces', 'Georgia', serif;
-        --font-sans: 'Satoshi', 'DM Sans', system-ui, sans-serif;
+        --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
         --font-display: 'Fraunces', 'Georgia', serif;
       }
 
@@ -172,7 +172,11 @@ export default function GlobalStyle() {
       @keyframes langFade    { from{opacity:0;transform:translateY(-6px);} to{opacity:1;transform:translateY(0);} }
       @keyframes slideUp     { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
       @keyframes pop         { from{opacity:0;transform:scale(0.93);} to{opacity:1;transform:scale(1);} }
-      @keyframes panSlow     { from{transform:scale(1.1);} to{transform:scale(1.1) translateX(-2%);} }
+      @keyframes panSlow      { from{transform:scale(1.1);} to{transform:scale(1.1) translateX(-2%);} }
+      @keyframes menuSlideIn  { from{opacity:0;transform:translateX(100%);} to{opacity:1;transform:translateX(0);} }
+      @keyframes menuItemIn   { from{opacity:0;transform:translateX(20px);} to{opacity:1;transform:translateX(0);} }
+      .mobile-menu-overlay    { animation: menuSlideIn 0.38s cubic-bezier(0.16,1,0.3,1) both; }
+      .mobile-menu-item       { animation: menuItemIn 0.4s cubic-bezier(0.16,1,0.3,1) both; }
 
       .animate-fadeInUp    { animation: fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
       .animate-fadeInScale { animation: fadeInScale 0.5s cubic-bezier(0.16,1,0.3,1) both; }
