@@ -15,30 +15,65 @@ export default function Footer() {
     },
     {
       title: t.footer.support,
-      links: [['FAQ', () => navigate('home')], ['Kontakt', () => navigate('contact')], ['Vilkår', () => navigate('home')], ['GDPR', () => navigate('home')], ['🔧 Admin', () => navigate('admin')]],
+      links: [['FAQ', () => navigate('home')], ['Kontakt', () => navigate('contact')], ['Vilkår', () => navigate('home')], ['GDPR', () => navigate('home')], ['Administration', () => navigate('admin')]],
     },
   ];
 
   return (
-    <footer style={{ background: '#070707', padding: '60px 5% 30px' }}>
+    <footer style={{ background: '#07070a', padding: '64px 5% 32px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 40, marginBottom: 48 }}>
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 56 }}>
+
+          {/* Brand column */}
           <div>
-            <div style={{ marginBottom: 20 }}><Logo onClick={() => navigate('home')} /></div>
-            <p className="sans" style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14, lineHeight: 1.7, maxWidth: 280 }}>{t.footer.tagline}</p>
-            <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
-              {['🌐', '📘', '📸', '▶'].map((icon, i) => (
-                <button key={i} style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: 'white', cursor: 'pointer', fontSize: 14 }}>{icon}</button>
+            <div style={{ marginBottom: 22 }}>
+              <Logo onClick={() => navigate('home')} />
+            </div>
+            <p className="sans" style={{ color: 'rgba(255,255,255,0.28)', fontSize: 14, lineHeight: 1.8, maxWidth: 280 }}>
+              {t.footer.tagline}
+            </p>
+
+            {/* Contact info */}
+            <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>Avenida del Mar 24, Marbella</div>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>hej@costadriveclub.es</div>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>+34 600 000 000</div>
+            </div>
+
+            {/* Social links — text only, no icons */}
+            <div style={{ display: 'flex', gap: 10, marginTop: 24, flexWrap: 'wrap' }}>
+              {['Instagram', 'Facebook', 'YouTube'].map((s) => (
+                <span key={s} className="sans" style={{
+                  padding: '5px 12px',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: 100,
+                  color: 'rgba(255,255,255,0.3)',
+                  fontSize: 11,
+                  cursor: 'pointer',
+                  letterSpacing: '0.5px',
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}>
+                  {s}
+                </span>
               ))}
             </div>
           </div>
+
+          {/* Link columns */}
           {cols.map((col) => (
             <div key={col.title}>
-              <h4 className="sans" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: 600, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 20 }}>{col.title}</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <h4 className="sans" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 22 }}>
+                {col.title}
+              </h4>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {col.links.map(([label, fn]) => (
-                  <a key={label} href="#" onClick={(e) => { e.preventDefault(); fn(); }} className="sans foot-link"
-                    style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14, textDecoration: 'none' }}>
+                  <a
+                    key={label}
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); fn(); }}
+                    className="sans foot-link"
+                    style={{ color: 'rgba(255,255,255,0.28)', fontSize: 14, textDecoration: 'none', letterSpacing: '0.2px' }}
+                  >
                     {label}
                   </a>
                 ))}
@@ -47,13 +82,24 @@ export default function Footer() {
           ))}
         </div>
 
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <span className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 13 }}>
+        {/* Bottom bar */}
+        <div style={{
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          paddingTop: 24,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: 12,
+        }}>
+          <span className="sans" style={{ color: 'rgba(255,255,255,0.16)', fontSize: 12 }}>
             © 2025 Costa Drive Club. {t.footer.rights}. CVR: DK-XXXXXXXX
           </span>
-          <div style={{ display: 'flex', gap: 16 }}>
-            {['🔒 GDPR', '🛡️ SSL', '💳 PCI DSS'].map((b) => (
-              <span key={b} className="sans" style={{ color: 'rgba(255,255,255,0.18)', fontSize: 11, letterSpacing: '0.5px' }}>{b}</span>
+          <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+            {['SSL', 'GDPR', 'PCI DSS'].map((b) => (
+              <span key={b} className="sans" style={{ color: 'rgba(255,255,255,0.14)', fontSize: 11, letterSpacing: '1px', fontWeight: 700, textTransform: 'uppercase' }}>
+                {b}
+              </span>
             ))}
           </div>
         </div>

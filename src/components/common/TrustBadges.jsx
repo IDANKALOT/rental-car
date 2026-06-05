@@ -1,27 +1,34 @@
 import { useApp } from '../../context/AppContext';
 import SectionHead from './SectionHead';
 
-const badges = [
-  { icon: '⭐', key: 'google',    color: '#f59e0b' },
-  { icon: '🏆', key: 'trustpilot', color: '#00b67a' },
-  { icon: '🔒', key: 'secure',    color: '#3b82f6' },
-  { icon: '🛡️', key: 'insurance', color: '#8b5cf6' },
-  { icon: '🇩🇰', key: 'support',  color: '#c8963c' },
-  { icon: '✅', key: 'verified',  color: '#059669' },
-];
-
 const googleReviews = [
-  { name: 'Mette H.', city: 'Aarhus', stars: 5, text: 'Fantastisk service! Bilen var ren og klar da vi ankom til Málaga. Intet bøvl, ingen overraskelser.' },
-  { name: 'Lars K.', city: 'Stockholm', stars: 5, text: 'Bookede online på 3 minutter. Modtog bilen i Barcelona og havde en perfekt uge på Costa Brava.' },
-  { name: 'Sarah B.', city: 'Oslo', stars: 5, text: 'Dansk kundeservice var guld værd. Ringte med et spørgsmål og fik svar med det samme. 5 stjerner!' },
-  { name: 'Thomas M.', city: 'København', stars: 5, text: 'Tredje gang vi lejer bil hos dem. Prisen er uslåelig og servicen er top. Ses næste sommer!' },
+  {
+    name: 'Mette H.', city: 'Aarhus', stars: 5,
+    text: 'Fantastisk service! Bilen var ren og klar da vi ankom til Málaga. Intet bøvl, ingen overraskelser — præcis som lovet.',
+    initials: 'MH', color: '#7c3aed',
+  },
+  {
+    name: 'Lars K.', city: 'Stockholm', stars: 5,
+    text: 'Bookede online på 3 minutter. Modtog bilen i Barcelona og havde en perfekt uge på Costa Brava. Kommer helt sikkert igen.',
+    initials: 'LK', color: '#059669',
+  },
+  {
+    name: 'Sarah B.', city: 'Oslo', stars: 5,
+    text: 'Dansk kundeservice var guld værd. Ringte med et spørgsmål og fik svar med det samme. Professionelt til fingerspidserne.',
+    initials: 'SB', color: '#dc2626',
+  },
+  {
+    name: 'Thomas M.', city: 'København', stars: 5,
+    text: 'Tredje gang vi lejer bil hos dem. Prisen er uslåelig og servicen er top. Vi ses næste sommer i Marbella!',
+    initials: 'TM', color: '#d97706',
+  },
 ];
 
-function Stars({ count = 5 }) {
+function Stars({ count = 5, size = 14 }) {
   return (
     <div style={{ display: 'flex', gap: 2 }}>
       {Array.from({ length: count }).map((_, i) => (
-        <span key={i} style={{ color: '#f59e0b', fontSize: 14 }}>★</span>
+        <span key={i} style={{ color: '#f59e0b', fontSize: size }}>★</span>
       ))}
     </div>
   );
@@ -35,46 +42,76 @@ export default function TrustBadges() {
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHead label={t.trust.label} title={t.trust.title} subtitle={t.trust.subtitle} light />
 
-        {/* Trust badge grid */}
-        <div className="trust-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 64 }}>
-          {badges.map((b) => (
-            <div key={b.key} className="glass" style={{ borderRadius: 'var(--radius)', padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 14 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: `${b.color}20`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
-                {b.icon}
+        {/* ── Large stat row ── */}
+        <div
+          className="trust-grid"
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, marginBottom: 72, border: '1px solid rgba(255,255,255,0.07)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}
+        >
+          {[
+            { n: '4.9', label: 'Google Rating', sub: 'Baseret på 2.847 anmeldelser' },
+            { n: '50k+', label: 'Tilfredse kunder', sub: 'Siden 2017' },
+            { n: '98%', label: 'Vil anbefale os', sub: 'Verificeret via Trustpilot' },
+          ].map((s, i) => (
+            <div key={i} style={{
+              background: 'var(--surface)',
+              padding: '40px 32px',
+              textAlign: 'center',
+              borderRight: i < 2 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+            }}>
+              <div style={{ fontSize: 'clamp(2.5rem,4vw,4rem)', fontWeight: 400, color: 'var(--sand)', fontFamily: 'var(--font-serif)', lineHeight: 1 }}>
+                {s.n}
               </div>
-              <span className="sans" style={{ color: 'rgba(255,255,255,0.85)', fontSize: 14, fontWeight: 500, lineHeight: 1.4 }}>
-                {t.trust[b.key]}
-              </span>
+              <div className="sans" style={{ color: 'white', fontSize: 15, fontWeight: 600, marginTop: 10 }}>{s.label}</div>
+              <div className="sans" style={{ color: 'var(--text-subtle)', fontSize: 12, marginTop: 5 }}>{s.sub}</div>
             </div>
           ))}
         </div>
 
-        {/* Google Reviews */}
-        <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 2 }}>
-            {[1,2,3,4,5].map(i => <span key={i} style={{ color: '#f59e0b', fontSize: 20 }}>★</span>)}
-          </div>
-          <span className="sans" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 15 }}>{t.reviews.rating}</span>
+        {/* ── Reviews ── */}
+        <div style={{ marginBottom: 16, textAlign: 'center' }}>
+          <Stars count={5} size={22} />
+          <p className="sans" style={{ color: 'var(--text-dim)', fontSize: 14, marginTop: 8 }}>{t.reviews.rating}</p>
         </div>
 
-        <div className="reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+        <div className="reviews-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 18, marginBottom: 56 }}>
           {googleReviews.map((r, i) => (
-            <div key={i} className="review-card" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius)', padding: 24 }}>
+            <div
+              key={i}
+              className="review-card"
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid rgba(255,255,255,0.07)',
+                borderRadius: 'var(--r-lg)',
+                padding: '28px 28px 24px',
+              }}
+            >
               <Stars count={r.stars} />
-              <p className="sans" style={{ color: 'rgba(255,255,255,0.75)', fontSize: 14, lineHeight: 1.7, margin: '14px 0 18px', fontStyle: 'italic' }}>
+              <p className="sans" style={{
+                color: 'rgba(255,255,255,0.7)',
+                fontSize: 15,
+                lineHeight: 1.75,
+                margin: '16px 0 22px',
+                fontStyle: 'italic',
+              }}>
                 "{r.text}"
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'linear-gradient(135deg, var(--gold), var(--gold-light))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0f0f0f', fontWeight: 700, fontSize: 15 }}>
-                  {r.name[0]}
+                <div style={{
+                  width: 40, height: 40, borderRadius: '50%',
+                  background: `${r.color}22`,
+                  border: `1px solid ${r.color}44`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: r.color, fontWeight: 700, fontSize: 14, fontFamily: 'var(--font-sans)', flexShrink: 0,
+                }}>
+                  {r.initials}
                 </div>
                 <div>
                   <div className="sans" style={{ color: 'white', fontWeight: 600, fontSize: 14 }}>{r.name}</div>
-                  <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{r.city}</div>
+                  <div className="sans" style={{ color: 'var(--text-subtle)', fontSize: 12 }}>{r.city}</div>
                 </div>
                 <div style={{ marginLeft: 'auto' }}>
                   <span className="sans" style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 700 }}>
-                    ✓ {t.reviews.verified}
+                    Verificeret
                   </span>
                 </div>
               </div>
@@ -82,10 +119,27 @@ export default function TrustBadges() {
           ))}
         </div>
 
-        {/* Secure payment strip */}
-        <div style={{ marginTop: 48, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 32, flexWrap: 'wrap' }}>
-          {['🔒 SSL', '💳 PCI DSS', '🛡️ Kasko', '✈️ IATA', '🌍 Trustpilot'].map((b) => (
-            <span key={b} className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12, letterSpacing: '1px', fontWeight: 600 }}>{b}</span>
+        {/* ── Trust badge strip ── */}
+        <div style={{
+          paddingTop: 32,
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 40,
+          flexWrap: 'wrap',
+        }}>
+          {[
+            ['SSL', 'Krypteret betaling'],
+            ['PCI DSS', 'Kortstandard'],
+            ['Kasko', 'Inkluderet'],
+            ['IATA', 'Akkrediteret'],
+            ['Trustpilot', 'Fremragende'],
+          ].map(([a, b]) => (
+            <div key={a} style={{ textAlign: 'center' }}>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.22)', fontSize: 11, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' }}>{a}</div>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.13)', fontSize: 10, marginTop: 2 }}>{b}</div>
+            </div>
           ))}
         </div>
       </div>
