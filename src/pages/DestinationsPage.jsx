@@ -10,7 +10,7 @@ export default function DestinationsPage() {
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <SectionHead label={t.destinations.label} title={t.destinations.title} subtitle={t.destinations.subtitle} light />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginBottom: 24 }}>
+        <div className="dest-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginBottom: 24 }}>
           {destinations.map((d, i) => (
             <div
               key={i}
