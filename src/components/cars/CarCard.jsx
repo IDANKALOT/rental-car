@@ -1,7 +1,10 @@
 import { memo, useState } from 'react';
 import { lowestPrice } from '../../data/cars';
+import { useApp } from '../../context/AppContext';
+import { formatPrice } from '../../utils/formatPrice';
 
 const CarCard = memo(function CarCard({ car, t, onBook }) {
+  const { lang } = useApp();
   const [imgError, setImgError] = useState(false);
   const low = lowestPrice(car);
   const hasWeekly = car.weeklyPrice && Number(car.weeklyPrice) < Number(car.price);
@@ -107,7 +110,7 @@ const CarCard = memo(function CarCard({ car, t, onBook }) {
               fontSize: 10, fontWeight: 600, padding: '3px 9px', borderRadius: 100,
               border: '1px solid rgba(22,163,74,0.22)',
             }}>
-              {car.weeklyPrice} kr/dag ved 7+ dage
+              {formatPrice(car.weeklyPrice, lang)}{t.perDay} · 7+ days
             </span>
           </div>
         )}
@@ -122,8 +125,8 @@ const CarCard = memo(function CarCard({ car, t, onBook }) {
               {t.from}
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 3 }}>
-              <span style={{ fontSize: 28, fontWeight: 700, color: 'white', fontFamily: 'var(--font-serif)' }}>{low}</span>
-              <span className="sans" style={{ color: 'var(--text-dim)', fontSize: 12 }}>kr{t.perDay}</span>
+              <span style={{ fontSize: 28, fontWeight: 700, color: 'white', fontFamily: 'var(--font-serif)' }}>{formatPrice(low, lang)}</span>
+              <span className="sans" style={{ color: 'var(--text-dim)', fontSize: 12 }}>{t.perDay}</span>
             </div>
           </div>
           <button

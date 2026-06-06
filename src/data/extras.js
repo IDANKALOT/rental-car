@@ -11,7 +11,7 @@ export const EXTRAS = [
 export const DISCOUNT_CODES = [
   { code: 'SOMMER10', type: 'percent', value: 10, label: '10% rabat' },
   { code: 'NORDIC15', type: 'percent', value: 15, label: '15% til skandinaviske kunder' },
-  { code: 'FLAT50',   type: 'flat',    value: 50, label: '50 kr i rabat' },
+  { code: 'FLAT50',   type: 'flat',    value: 50, label: '€50 off' },
 ];
 
 export function computeExtrasTotal(extrasState, days) {

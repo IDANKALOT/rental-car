@@ -4,6 +4,7 @@ import { useBooking } from '../../hooks/useBooking';
 import { createBooking } from '../../services/api';
 import { EXTRAS, DISCOUNT_CODES, computeExtrasTotal } from '../../data/extras';
 import { LOCATIONS, CATEGORIES, fmtDate, getEffectivePrice, lowestPrice } from '../../data/cars';
+import { formatPrice } from '../../utils/formatPrice';
 
 /* ── Shared sub-components ─────────────────────────────────────────────────── */
 
@@ -33,21 +34,21 @@ function ProgressBar({ steps, current }) {
   );
 }
 
-function PriceSummary({ state, pricing, t }) {
+function PriceSummary({ state, pricing, t, lang }) {
   const { carTotal, extrasTotal, discountAmount, grandTotal } = pricing;
   return (
     <div style={{ background: 'rgba(255,255,255,0.04)', borderLeft: '1px solid rgba(255,255,255,0.08)', padding: 28, display: 'flex', flexDirection: 'column', gap: 14 }}>
       <div className="sans" style={{ color: 'var(--gold)', fontSize: 11, fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: 4 }}>
-        💰 {t.priceBreakdown?.total || 'Pris oversigt'}
+        💰 {t.priceBreakdown?.total || 'Price'}
       </div>
       {state.selectedCar && (
-        <Row label={`${state.selectedCar.name} × ${state.days} dage`} value={`${carTotal} kr`} />
+        <Row label={`${state.selectedCar.name} × ${state.days} ${t.bookingModal.days}`} value={formatPrice(carTotal, lang)} />
       )}
-      {extrasTotal > 0 && <Row label={t.priceBreakdown?.extras || 'Ekstraudstyr'} value={`${extrasTotal} kr`} />}
-      {discountAmount > 0 && <Row label={t.priceBreakdown?.discount || 'Rabat'} value={`-${discountAmount} kr`} green />}
+      {extrasTotal > 0 && <Row label={t.priceBreakdown?.extras} value={formatPrice(extrasTotal, lang)} />}
+      {discountAmount > 0 && <Row label={t.priceBreakdown?.discount} value={`-${formatPrice(discountAmount, lang)}`} green />}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 14, marginTop: 4 }}>
-        <Row label={t.priceBreakdown?.total || 'I alt'} value={`${grandTotal} kr`} large />
-        <p className="sans" style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, marginTop: 8 }}>{t.priceBreakdown?.taxes || 'Inkl. moms og afgifter'}</p>
+        <Row label={t.priceBreakdown?.total} value={formatPrice(grandTotal, lang)} large />
+        <p className="sans" style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, marginTop: 8 }}>{t.priceBreakdown?.taxes}</p>
       </div>
       {state.selectedCar && (
         <div style={{ marginTop: 8 }}>
@@ -196,7 +197,7 @@ function Step2({ booking, t }) {
 }
 
 /* ── Step 3: Vehicle ───────────────────────────────────────────────────────── */
-function Step3({ booking, t, visibleCars }) {
+function Step3({ booking, t, lang, visibleCars }) {
   const [catFilter, setCatFilter] = useState('all');
   const filtered = visibleCars.filter((c) => catFilter === 'all' || c.type === catFilter);
 
@@ -234,9 +235,9 @@ function Step3({ booking, t, visibleCars }) {
                 </div>
               </div>
               <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11 }}>{price} kr/dag</div>
-                <div style={{ fontWeight: 700, fontSize: 20, color: selected ? 'var(--gold)' : 'white' }}>{total} kr</div>
-                <div className="sans" style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>i alt</div>
+                <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11 }}>{formatPrice(price, lang)}{t.perDay}</div>
+                <div style={{ fontWeight: 700, fontSize: 20, color: selected ? 'var(--gold)' : 'white' }}>{formatPrice(total, lang)}</div>
+                <div className="sans" style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>{t.priceBreakdown?.total}</div>
               </div>
               {selected && <div style={{ color: 'var(--gold)', fontSize: 22, flexShrink: 0 }}>✓</div>}
             </div>
@@ -248,7 +249,7 @@ function Step3({ booking, t, visibleCars }) {
 }
 
 /* ── Step 4: Extras ────────────────────────────────────────────────────────── */
-function Step4({ booking, t }) {
+function Step4({ booking, t, lang }) {
   return (
     <div className="step-enter">
       <StepTitle icon="✨" title={t.extras.title} subtitle={t.extras.subtitle} />
@@ -267,7 +268,7 @@ function Step4({ booking, t }) {
               <div className="sans" style={{ color: selected ? 'var(--gold)' : 'white', fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{t.extras[labelKey]}</div>
               <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, marginBottom: 8, lineHeight: 1.4 }}>{t.extras[descKey]}</div>
               <div className="sans" style={{ color: selected ? 'var(--gold)' : 'rgba(255,255,255,0.6)', fontWeight: 700, fontSize: 14 }}>
-                +{ex.price} kr{ex.type === 'daily' ? t.extras.perDay : ` ${t.extras.flat}`}
+                +{formatPrice(ex.price, lang)}{ex.type === 'daily' ? t.extras.perDay : ` ${t.extras.flat}`}
               </div>
             </div>
           );
@@ -316,7 +317,7 @@ function Step5({ booking, t }) {
 }
 
 /* ── Step 6: Payment ───────────────────────────────────────────────────────── */
-function Step6({ booking, t, pricing }) {
+function Step6({ booking, t, lang, pricing }) {
   const { grandTotal, discountAmount } = pricing;
   const p = booking.state.payment;
   const set = (k) => (v) => booking.setPayment({ [k]: v });
@@ -373,8 +374,8 @@ function Step6({ booking, t, pricing }) {
       </label>
       {/* Total */}
       <div style={{ background: 'rgba(200,150,60,0.1)', border: '1px solid rgba(200,150,60,0.25)', borderRadius: 14, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span className="sans" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>{t.priceBreakdown?.total || 'I alt'}</span>
-        <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--gold)' }}>{grandTotal} kr</span>
+        <span className="sans" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>{t.priceBreakdown?.total}</span>
+        <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--gold)' }}>{formatPrice(grandTotal, lang)}</span>
       </div>
     </div>
   );
@@ -409,7 +410,7 @@ function Step7({ booking, t, onClose, onViewBookings }) {
 
 /* ── Main BookingFlow component ────────────────────────────────────────────── */
 export default function BookingFlow() {
-  const { t, bookingFlow, closeBookingFlow, visibleCars, addBooking, user, navigate } = useApp();
+  const { t, lang, bookingFlow, closeBookingFlow, visibleCars, addBooking, user, navigate } = useApp();
   const booking = useBooking(bookingFlow.draft);
   const { pricing } = booking;
   const [paying, setPaying] = useState(false);
@@ -476,10 +477,10 @@ export default function BookingFlow() {
     const s = booking.state.step;
     if (s === 1) return <Step1 booking={booking} t={t} />;
     if (s === 2) return <Step2 booking={booking} t={t} />;
-    if (s === 3) return <Step3 booking={booking} t={t} visibleCars={visibleCars} />;
-    if (s === 4) return <Step4 booking={booking} t={t} />;
+    if (s === 3) return <Step3 booking={booking} t={t} lang={lang} visibleCars={visibleCars} />;
+    if (s === 4) return <Step4 booking={booking} t={t} lang={lang} />;
     if (s === 5) return <Step5 booking={booking} t={t} />;
-    if (s === 6) return <Step6 booking={booking} t={t} pricing={pricing} />;
+    if (s === 6) return <Step6 booking={booking} t={t} lang={lang} pricing={pricing} />;
     if (s === 7) return <Step7 booking={booking} t={t} onClose={closeBookingFlow} onViewBookings={() => { closeBookingFlow(); navigate('account'); }} />;
   }
 
@@ -511,7 +512,7 @@ export default function BookingFlow() {
           </div>
           {!isDone && (
             <div className="booking-flow-sidebar" style={{ overflowY: 'auto', borderLeft: '1px solid rgba(255,255,255,0.06)' }}>
-              <PriceSummary state={booking.state} pricing={pricing} t={t} />
+              <PriceSummary state={booking.state} pricing={pricing} t={t} lang={lang} />
             </div>
           )}
         </div>
@@ -525,7 +526,7 @@ export default function BookingFlow() {
             }
             <button onClick={handleNext} disabled={!canProceed() || paying} className="btn-primary sans"
               style={{ padding: '13px 32px', fontSize: 15, opacity: (canProceed() && !paying) ? 1 : 0.45, cursor: (canProceed() && !paying) ? 'pointer' : 'not-allowed' }}>
-              {paying ? '⏳ Behandler...' : isLastStep ? `💳 Betal ${pricing.grandTotal} kr` : 'Fortsæt →'}
+              {paying ? '⏳...' : isLastStep ? `💳 ${formatPrice(pricing.grandTotal, lang)}` : 'Fortsæt →'}
             </button>
           </div>
         )}
