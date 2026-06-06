@@ -163,7 +163,7 @@ function Step2({ booking, t }) {
   const today = new Date().toISOString().split('T')[0];
   return (
     <div className="step-enter">
-      <StepTitle icon="📅" title={t.steps.dates} subtitle="Vælg afhentnings- og afleveringsdato" />
+      <StepTitle icon="📅" title={t.steps.dates} subtitle={t.booking.datesSub} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div>
           <label className="sans" style={{ display: 'block', color: 'rgba(255,255,255,0.45)', fontSize: 10, marginBottom: 8, letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: 600 }}>{t.booking.pickDate}</label>
@@ -178,8 +178,8 @@ function Step2({ booking, t }) {
         <div className="glass" style={{ borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 28 }}>📆</span>
           <div>
-            <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>Varighed</div>
-            <div className="sans" style={{ color: 'white', fontWeight: 700, fontSize: 18 }}>{booking.state.days} dage</div>
+            <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{t.booking.duration}</div>
+            <div className="sans" style={{ color: 'white', fontWeight: 700, fontSize: 18 }}>{booking.state.days} {t.bookingModal.days}</div>
           </div>
           <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
             <div className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{fmtDate(booking.state.pickDate)}</div>
@@ -189,7 +189,7 @@ function Step2({ booking, t }) {
       )}
       {booking.state.pickDate && new Date(booking.state.pickDate).getMonth() >= 6 && new Date(booking.state.pickDate).getMonth() <= 7 && (
         <div style={{ marginTop: 12, background: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.3)', borderRadius: 12, padding: '12px 16px' }}>
-          <span className="sans" style={{ color: '#fb923c', fontSize: 13 }}>☀️ Du rejser i højsæson (juli–august) – visse biler har sæsonpris.</span>
+          <span className="sans" style={{ color: '#fb923c', fontSize: 13 }}>{t.booking.highSeason}</span>
         </div>
       )}
     </div>
@@ -285,7 +285,7 @@ function Step5({ booking, t }) {
   const hasAirportPickup = booking.state.extras.airportPickup;
   return (
     <div className="step-enter">
-      <StepTitle icon="👤" title={t.steps.details} subtitle="Fortæl os lidt om dig" />
+      <StepTitle icon="👤" title={t.steps.details} subtitle={t.booking.detailsSub} />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
         <div style={{ paddingRight: 8 }}>
           <LightInput label={t.customerForm.name} value={c.name} onChange={set('name')} required />
@@ -297,7 +297,7 @@ function Step5({ booking, t }) {
           <div style={{ marginBottom: 14 }}>
             <label className="sans" style={{ display: 'block', color: 'rgba(255,255,255,0.45)', fontSize: 10, marginBottom: 6, letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: 600 }}>{t.customerForm.country}</label>
             <select className="inp sans" value={c.country} onChange={(e) => set('country')(e.target.value)}>
-              {['Danmark', 'Sverige', 'Norge', 'Finland', 'Tyskland', 'UK', 'Spanien', 'Andet'].map((c) => (
+              {(t.booking.countriesList || ['Denmark', 'Sweden', 'Norway', 'Finland', 'Germany', 'UK', 'Spain', 'Other']).map((c) => (
                 <option key={c} value={c} style={{ background: '#1a1a1a' }}>{c}</option>
               ))}
             </select>
@@ -354,7 +354,7 @@ function Step6({ booking, t, lang, pricing }) {
       )}
       {p.method !== 'card' && (
         <div style={{ background: 'rgba(255,255,255,0.04)', borderRadius: 12, padding: '16px 20px', marginBottom: 20, textAlign: 'center' }}>
-          <p className="sans" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14 }}>Du sendes videre til {p.method === 'paypal' ? 'PayPal' : 'Stripe'} for sikker betaling.</p>
+          <p className="sans" style={{ color: 'rgba(255,255,255,0.5)', fontSize: 14 }}>{(t.booking.paymentRedirect || '').replace('{method}', p.method === 'paypal' ? 'PayPal' : 'Stripe')}</p>
         </div>
       )}
       {/* Discount code */}
@@ -521,12 +521,12 @@ export default function BookingFlow() {
         {!isDone && (
           <div style={{ padding: '16px 28px', borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', gap: 12, justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
             {booking.state.step > 1
-              ? <button onClick={booking.prevStep} className="sans" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)', borderRadius: 12, padding: '12px 24px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>← Tilbage</button>
+              ? <button onClick={booking.prevStep} className="sans" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)', borderRadius: 12, padding: '12px 24px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>{t.booking.back}</button>
               : <div />
             }
             <button onClick={handleNext} disabled={!canProceed() || paying} className="btn-primary sans"
               style={{ padding: '13px 32px', fontSize: 15, opacity: (canProceed() && !paying) ? 1 : 0.45, cursor: (canProceed() && !paying) ? 'pointer' : 'not-allowed' }}>
-              {paying ? '⏳...' : isLastStep ? `💳 ${formatPrice(pricing.grandTotal, lang)}` : 'Fortsæt →'}
+              {paying ? t.booking.processing : isLastStep ? `💳 ${formatPrice(pricing.grandTotal, lang)}` : t.bookingModal.continue}
             </button>
           </div>
         )}

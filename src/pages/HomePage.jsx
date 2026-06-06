@@ -5,33 +5,17 @@ import TrustBadges from '../components/common/TrustBadges';
 import BookingWidget from '../components/booking/BookingWidget';
 import CarCard from '../components/cars/CarCard';
 import { destinations } from '../data/destinations';
-import { faqs } from '../data/faqs';
 
 const HERO_IMG = 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80';
 const CTA_IMG  = 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1920&q=80';
 
-const whyFeatures = [
-  {
-    title: 'Sømløs afhentning — overalt i Spanien',
-    desc: 'Fra lufthavn til hotel eller direkte til dig. Vi leverer din bil præcis der, hvor du har brug for den — med 10 minutters garanti.',
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80',
-    stats: [{ n: '500+', l: 'Afhentningssteder' }, { n: '10 min', l: 'Garanteret' }],
-  },
-  {
-    title: 'Premium bilflåde — fra byrunabout til eksklusiv SUV',
-    desc: 'Alle biler er maksimalt 2 år gamle, fuldt servicede og rengjorte. Vælg mellem economy, SUV, cabriolet og luksusmodeller.',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80',
-    stats: [{ n: '500+', l: 'Biler' }, { n: '< 2 år', l: 'Gennemsnitsalder' }],
-  },
-  {
-    title: 'Skandinavisk support — på dit eget sprog',
-    desc: 'Vi taler dansk, norsk og svensk. Ring, skriv eller chat — vores team er klar 24/7, 365 dage om året fra Marbella.',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80',
-    stats: [{ n: '24/7', l: 'Support' }, { n: '4.9★', l: 'Google Rating' }],
-  },
+const WHY_IMAGES = [
+  'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80',
+  'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80',
+  'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=900&q=80',
 ];
 
-function WhyPanel({ feature, idx }) {
+function WhyPanel({ idx, title, desc, image, stats }) {
   const isReversed = idx % 2 === 1;
   return (
     <div
@@ -47,8 +31,8 @@ function WhyPanel({ feature, idx }) {
       {/* Image side */}
       <div style={{ position: 'relative', overflow: 'hidden', direction: 'ltr', minHeight: 360 }}>
         <img
-          src={feature.image}
-          alt={feature.title}
+          src={image}
+          alt={title}
           loading="lazy"
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
@@ -76,13 +60,13 @@ function WhyPanel({ feature, idx }) {
           fontStyle: 'italic',
           fontFamily: 'var(--font-serif)',
         }}>
-          {feature.title}
+          {title}
         </h3>
         <p className="sans" style={{ color: 'var(--text-dim)', fontSize: 15, lineHeight: 1.8 }}>
-          {feature.desc}
+          {desc}
         </p>
         <div style={{ display: 'flex', gap: 36, paddingTop: 8, borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          {feature.stats.map((s) => (
+          {stats.map((s) => (
             <div key={s.l}>
               <div style={{ color: 'var(--sand)', fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-serif)' }}>{s.n}</div>
               <div className="sans" style={{ color: 'var(--text-subtle)', fontSize: 11, letterSpacing: '0.5px', marginTop: 3 }}>{s.l}</div>
@@ -158,6 +142,12 @@ export default function HomePage() {
   const { t, visibleCars, openBookingFlow, navigate } = useApp();
   const [openFaq, setOpenFaq] = useState(null);
 
+  const whyFeatures = [
+    { title: t.why.f1title, desc: t.why.f1desc, image: WHY_IMAGES[0], stats: [{ n: '500+', l: t.why.f1s1 }, { n: '10 min', l: t.why.f1s2 }] },
+    { title: t.why.f2title, desc: t.why.f2desc, image: WHY_IMAGES[1], stats: [{ n: '500+', l: t.why.f2s1 }, { n: '< 2 år', l: t.why.f2s2 }] },
+    { title: t.why.f3title, desc: t.why.f3desc, image: WHY_IMAGES[2], stats: [{ n: '24/7', l: 'Support' }, { n: '4.9★', l: 'Google Rating' }] },
+  ];
+
   return (
     <>
       {/* ══════════════════════════════════════════════
@@ -229,7 +219,7 @@ export default function HomePage() {
           padding: '18px 5%',
         }}>
           <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', gap: 36, flexWrap: 'wrap', alignItems: 'center' }}>
-            {[['500+', 'Biler i flåden'], ['50,000+', 'Tilfredse kunder'], ['4.9', 'Google rating'], ['24/7', 'Dansk support']].map(([n, l]) => (
+            {[['500+', t.hero.stat1], ['50,000+', t.hero.stat2], ['4.9', t.hero.stat3], ['24/7', t.hero.stat4]].map(([n, l]) => (
               <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ color: 'var(--sand)', fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-serif)' }}>{n}</span>
                 <span className="sans" style={{ color: 'rgba(255,255,255,0.32)', fontSize: 12, lineHeight: 1.3 }}>{l}</span>
@@ -261,7 +251,7 @@ export default function HomePage() {
               <div>
                 <span style={{ display: 'block', width: 36, height: 1, background: 'var(--gold)', marginBottom: 22, opacity: 0.7 }} />
                 <span className="sans" style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 700 }}>
-                  Eksklusivt
+                  {t.home.exclusive}
                 </span>
                 <h3 style={{
                   color: 'white', fontSize: 'clamp(1.3rem,2vw,1.7rem)', fontWeight: 400,
@@ -270,11 +260,11 @@ export default function HomePage() {
                   Chauffeur &amp;<br />Concierge Service
                 </h3>
                 <p className="sans" style={{ color: 'var(--text-dim)', marginTop: 14, lineHeight: 1.8, fontSize: 14 }}>
-                  Privat chauffør, luksusbil og personlig service fra ankomst til afrejse.
+                  {t.home.conciergeDesc}
                 </p>
               </div>
               <button className="btn-ghost sans" onClick={() => navigate('contact')} style={{ textAlign: 'center', justifyContent: 'center' }}>
-                Kontakt os →
+                {t.home.contactUs}
               </button>
             </div>
           </div>
@@ -286,7 +276,7 @@ export default function HomePage() {
               onClick={() => navigate('cars')}
               style={{ background: 'none', border: 'none', color: 'var(--text-dim)', fontSize: 14, cursor: 'pointer', letterSpacing: '0.3px' }}
             >
-              Se hele flåden →
+              {t.home.viewFleet}
             </button>
           </div>
         </div>
@@ -300,7 +290,7 @@ export default function HomePage() {
           <SectionHead label={t.why.label} title={t.why.title} subtitle={t.why.subtitle} light />
         </div>
         {whyFeatures.map((feature, idx) => (
-          <WhyPanel key={idx} feature={feature} idx={idx} />
+          <WhyPanel key={idx} idx={idx} title={feature.title} desc={feature.desc} image={feature.image} stats={feature.stats} />
         ))}
         <div style={{ height: 'var(--space-24)' }} />
       </section>
@@ -323,7 +313,7 @@ export default function HomePage() {
               onClick={() => navigate('destinations')}
               style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: 14, cursor: 'pointer' }}
             >
-              Se alle destinationer →
+              {t.home.viewDests}
             </button>
           </div>
         </div>
@@ -336,7 +326,7 @@ export default function HomePage() {
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <SectionHead label={t.faq.label} title={t.faq.title} subtitle={t.faq.subtitle} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {faqs.map((f, i) => (
+            {(t.faq.items || []).map((f, i) => (
               <div key={i} className="faq-item" style={{ background: 'white', borderRadius: 14, border: '1px solid rgba(0,0,0,0.07)', overflow: 'hidden' }}>
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -370,7 +360,7 @@ export default function HomePage() {
         </div>
         <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center', padding: '80px 5%', position: 'relative', zIndex: 1, width: '100%' }}>
           <span className="sans" style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 700 }}>
-            Klar til afgang?
+            {t.home.readyBadge}
           </span>
           <h2 style={{
             fontSize: 'clamp(2rem,4vw,3.2rem)', fontWeight: 400, color: 'white',
@@ -383,10 +373,10 @@ export default function HomePage() {
           </p>
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn-primary sans" onClick={() => openBookingFlow()} style={{ padding: '15px 36px', fontSize: 15 }}>
-              Book din bil →
+              {t.home.bookCar}
             </button>
             <button className="btn-ghost sans" onClick={() => navigate('contact')} style={{ padding: '15px 36px', fontSize: 15 }}>
-              Kontakt os
+              {t.home.contactBtn}
             </button>
           </div>
         </div>

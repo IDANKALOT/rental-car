@@ -48,9 +48,9 @@ export default function TrustBadges() {
           style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, marginBottom: 72, border: '1px solid rgba(255,255,255,0.07)', borderRadius: 'var(--r-xl)', overflow: 'hidden' }}
         >
           {[
-            { n: '4.9', label: 'Google Rating', sub: 'Baseret på 2.847 anmeldelser' },
-            { n: '50k+', label: 'Tilfredse kunder', sub: 'Siden 2017' },
-            { n: '98%', label: 'Vil anbefale os', sub: 'Verificeret via Trustpilot' },
+            { n: '4.9', label: 'Google Rating', sub: t.trust.googleSub },
+            { n: '50k+', label: t.trust.customersLabel, sub: t.trust.customersSub },
+            { n: '98%', label: t.trust.recommendLabel, sub: t.trust.recommendSub },
           ].map((s, i) => (
             <div key={i} style={{
               background: 'var(--surface)',
@@ -111,7 +111,7 @@ export default function TrustBadges() {
                 </div>
                 <div style={{ marginLeft: 'auto' }}>
                   <span className="sans" style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: '1px', textTransform: 'uppercase', fontWeight: 700 }}>
-                    Verificeret
+                    {t.reviews.verified}
                   </span>
                 </div>
               </div>
@@ -130,11 +130,11 @@ export default function TrustBadges() {
           flexWrap: 'wrap',
         }}>
           {[
-            ['SSL', 'Krypteret betaling'],
-            ['PCI DSS', 'Kortstandard'],
-            ['Kasko', 'Inkluderet'],
-            ['IATA', 'Akkrediteret'],
-            ['Trustpilot', 'Fremragende'],
+            ['SSL', t.trust.stripPayment],
+            ['PCI DSS', t.trust.stripCard],
+            ['Kasko', t.trust.stripInsurance],
+            ['IATA', t.trust.stripAccred],
+            ['Trustpilot', t.trust.stripTrustpilot],
           ].map(([a, b]) => (
             <div key={a} style={{ textAlign: 'center' }}>
               <div className="sans" style={{ color: 'rgba(255,255,255,0.22)', fontSize: 11, fontWeight: 700, letterSpacing: '1.5px', textTransform: 'uppercase' }}>{a}</div>

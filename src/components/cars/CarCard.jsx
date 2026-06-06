@@ -87,7 +87,7 @@ const CarCard = memo(function CarCard({ car, t, onBook }) {
           <span style={{ opacity: 0.3 }}>·</span>
           <span>{car.transmission}</span>
           <span style={{ opacity: 0.3 }}>·</span>
-          <span>{car.doors} døre</span>
+          <span>{car.doors} {t.car?.doors || 'doors'}</span>
         </div>
 
         {/* Feature pills */}

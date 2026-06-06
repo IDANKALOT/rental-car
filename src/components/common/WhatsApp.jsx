@@ -68,7 +68,7 @@ export default function WhatsApp() {
                 <div style={{ textAlign: 'center', padding: '12px 0 16px' }}>
                   <div style={{ fontSize: 40, marginBottom: 8 }}>📞</div>
                   <p className="sans" style={{ color: 'rgba(255,255,255,0.6)', fontSize: 14, marginBottom: 16 }}>+34 600 000 000</p>
-                  <p className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, marginBottom: 20 }}>Man–Søn 08:00–22:00</p>
+                  <p className="sans" style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12, marginBottom: 20 }}>{t.wa.hours}</p>
                 </div>
                 <a href={`tel:+${phoneNumber}`} style={{ textDecoration: 'none', display: 'block' }}>
                   <button className="sans" style={{ width: '100%', background: 'linear-gradient(135deg, var(--gold), var(--gold-light))', border: 'none', color: '#0f0f0f', borderRadius: 12, padding: '12px', fontSize: 14, fontWeight: 700, cursor: 'pointer' }}>
