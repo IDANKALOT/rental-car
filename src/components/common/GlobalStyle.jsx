@@ -228,6 +228,8 @@ export default function GlobalStyle() {
         .footer-grid              { grid-template-columns: 1fr !important; gap: 32px !important; }
         .admin-grid               { grid-template-columns: 1fr !important; }
         .booking-flow-grid        { grid-template-columns: 1fr !important; }
+        .step-2col                { grid-template-columns: 1fr !important; }
+        .progress-label           { display: none !important; }
         .dest-card                { grid-column: span 1 !important; grid-row: span 1 !important; height: 220px !important; }
         .hero-title               { font-size: clamp(2.2rem,8vw,3.5rem) !important; }
         .booking-flow-sidebar     { display: none !important; }

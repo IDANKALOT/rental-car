@@ -20,7 +20,7 @@ function ProgressBar({ steps, current }) {
               <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: done ? 14 : 13, fontWeight: 700, transition: 'all 0.3s', background: done ? '#16a34a' : active ? 'var(--gold)' : 'rgba(255,255,255,0.1)', color: done || active ? (active ? '#0f0f0f' : 'white') : 'rgba(255,255,255,0.4)', border: done ? '2px solid #16a34a' : active ? '2px solid var(--gold)' : '2px solid rgba(255,255,255,0.15)' }}>
                 {done ? '✓' : s.icon}
               </div>
-              <span className="sans" style={{ fontSize: 9, color: active ? 'var(--gold)' : done ? '#16a34a' : 'rgba(255,255,255,0.35)', fontWeight: active ? 700 : 400, letterSpacing: '0.5px', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+              <span className="sans progress-label" style={{ fontSize: 9, color: active ? 'var(--gold)' : done ? '#16a34a' : 'rgba(255,255,255,0.35)', fontWeight: active ? 700 : 400, letterSpacing: '0.5px', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
                 {s.label}
               </span>
             </div>
@@ -116,7 +116,7 @@ function Step1({ booking, t }) {
   return (
     <div className="step-enter">
       <StepTitle icon="📍" title={t.steps.location} subtitle={t.booking.placeholder} />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+      <div className="step-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
         <div>
           <label className="sans" style={{ display: 'block', color: 'rgba(255,255,255,0.45)', fontSize: 10, marginBottom: 6, letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: 600 }}>{t.booking.pickup}</label>
           <select className="inp sans" value={booking.state.pickup} onChange={(e) => handleLocation('pickup', e.target.value)}>
@@ -164,7 +164,7 @@ function Step2({ booking, t }) {
   return (
     <div className="step-enter">
       <StepTitle icon="📅" title={t.steps.dates} subtitle={t.booking.datesSub} />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
+      <div className="step-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
         <div>
           <label className="sans" style={{ display: 'block', color: 'rgba(255,255,255,0.45)', fontSize: 10, marginBottom: 8, letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: 600 }}>{t.booking.pickDate}</label>
           <input type="date" className="inp sans" min={today} value={booking.state.pickDate} onChange={(e) => booking.setDates(e.target.value, booking.state.returnDate)} style={{ fontSize: 15, padding: '14px' }} />
@@ -253,7 +253,7 @@ function Step4({ booking, t, lang }) {
   return (
     <div className="step-enter">
       <StepTitle icon="✨" title={t.extras.title} subtitle={t.extras.subtitle} />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div className="step-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
         {EXTRAS.map((ex) => {
           const selected = booking.state.extras[ex.id];
           const labelKey = ex.id;
@@ -286,13 +286,13 @@ function Step5({ booking, t }) {
   return (
     <div className="step-enter">
       <StepTitle icon="👤" title={t.steps.details} subtitle={t.booking.detailsSub} />
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
-        <div style={{ paddingRight: 8 }}>
+      <div className="step-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <div>
           <LightInput label={t.customerForm.name} value={c.name} onChange={set('name')} required />
           <LightInput label={t.customerForm.phone} type="tel" value={c.phone} onChange={set('phone')} required />
           {hasAirportPickup && <LightInput label={t.customerForm.flightNumber} value={c.flightNumber} onChange={set('flightNumber')} placeholder="SK203" />}
         </div>
-        <div style={{ paddingLeft: 8 }}>
+        <div>
           <LightInput label={t.customerForm.email} type="email" value={c.email} onChange={set('email')} required />
           <div style={{ marginBottom: 14 }}>
             <label className="sans" style={{ display: 'block', color: 'rgba(255,255,255,0.45)', fontSize: 10, marginBottom: 6, letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: 600 }}>{t.customerForm.country}</label>
@@ -334,7 +334,7 @@ function Step6({ booking, t, lang, pricing }) {
     <div className="step-enter">
       <StepTitle icon="💳" title={t.payment.title} subtitle={t.payment.method} />
       {/* Payment method */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 24, flexWrap: 'wrap' }}>
         {[{ id: 'card', label: `💳 ${t.payment.card}` }, { id: 'paypal', label: 'PayPal' }, { id: 'stripe', label: 'Stripe' }].map((m) => (
           <button key={m.id} onClick={() => set('method')(m.id)} className="sans"
             style={{ flex: 1, background: p.method === m.id ? 'rgba(200,150,60,0.18)' : 'rgba(255,255,255,0.05)', border: `2px solid ${p.method === m.id ? 'var(--gold)' : 'rgba(255,255,255,0.1)'}`, color: p.method === m.id ? 'var(--gold)' : 'rgba(255,255,255,0.6)', borderRadius: 12, padding: '12px 8px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
