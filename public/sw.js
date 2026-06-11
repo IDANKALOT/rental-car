@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cdc-v2';
+const CACHE_NAME = 'soluxe-v1';
 const STATIC_ASSETS = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', (e) => {

@@ -11,12 +11,24 @@
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.soluxecars.com/" />
 
+    <!-- hreflang – same SPA serves all languages -->
+    <link rel="alternate" hreflang="da"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="en"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="es"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="de"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="sv"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="nb"        href="https://www.soluxecars.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.soluxecars.com/" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.soluxecars.com/" />
     <meta property="og:title" content="Soluxe – Premium biludlejning i Spanien" />
     <meta property="og:description" content="Lej din drømmebil i Spanien. Dansk support, gennemsigtige priser, 500+ biler. Málaga · Marbella · Barcelona · Alicante." />
-    <meta property="og:image" content="https://www.soluxecars.com/og-image.jpg" />
+    <meta property="og:image" content="https://www.soluxecars.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Soluxe – Premium biludlejning i Spanien" />
     <meta property="og:locale" content="da_DK" />
     <meta property="og:locale:alternate" content="en_GB" />
     <meta property="og:locale:alternate" content="sv_SE" />
@@ -27,7 +39,8 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Soluxe – Biludlejning i Spanien" />
     <meta name="twitter:description" content="Lej bil i Spanien. Dansk kundeservice, ingen skjulte gebyrer." />
-    <meta name="twitter:image" content="https://www.soluxecars.com/og-image.jpg" />
+    <meta name="twitter:image" content="https://www.soluxecars.com/og-image.png" />
+    <meta name="twitter:site" content="@soluxecars" />
 
     <!-- PWA -->
     <link rel="manifest" href="/manifest.json" />
@@ -42,7 +55,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet" />
 
-    <!-- Local Business Structured Data -->
+    <!-- CarRental Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,6 +63,8 @@
       "name": "Soluxe",
       "description": "Premium car rental in Spain with Scandinavian-language customer service",
       "url": "https://www.soluxecars.com",
+      "logo": "https://www.soluxecars.com/og-image.png",
+      "image": "https://www.soluxecars.com/og-image.png",
       "telephone": "+34600000000",
       "email": "info@soluxecars.com",
       "priceRange": "€€",
@@ -76,8 +91,74 @@
         "bestRating": "5"
       },
       "hasMap": "https://maps.google.com/?q=Marbella,Spain",
-      "areaServed": [
-        "Málaga", "Marbella", "Barcelona", "Alicante", "Mallorca", "Sevilla"
+      "areaServed": ["Málaga","Marbella","Barcelona","Alicante","Mallorca","Sevilla"]
+    }
+    </script>
+
+    <!-- WebSite + Sitelinks Searchbox -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Soluxe",
+      "url": "https://www.soluxecars.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.soluxecars.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hvad koster det at leje en bil i Spanien?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hos Soluxe starter dagspriser fra €175/dag for en økonombil. Ugepriser er billigere – typisk 15-20% rabat. Prisen inkluderer forsikring og vejhjælp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan jeg hente bilen i Málaga lufthavn?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Vi tilbyder afhentning og aflevering i Málaga Lufthavn, Málaga Centrum, Marbella, Fuengirola og Torremolinos – ofte til samme pris."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hvad skal jeg bruge for at leje en bil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Du skal bruge gyldigt kørekort (minimum 1 år gammelt), pas eller ID-kort samt et kredit- eller debetkort til depositum."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Er der skjulte gebyrer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nej. Alle priser hos Soluxe er inklusive grundforsikring, vejhjælp og skatter. Du betaler præcis det beløb du ser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan jeg afbestille gratis?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, gratis afbestilling op til 48 timer før afhentning. Ingen spørgsmål, ingen gebyrer."
+          }
+        }
       ]
     }
     </script>
