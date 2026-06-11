@@ -46,9 +46,9 @@ export default function GlobalStyle() {
         --space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;
 
         /* Typography */
-        --font-serif: 'Fraunces', 'Georgia', serif;
-        --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
-        --font-display: 'Fraunces', 'Georgia', serif;
+        --font-serif: 'Outfit', system-ui, sans-serif;
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Outfit', system-ui, sans-serif;
       }
 
       body {

@@ -57,7 +57,7 @@ function AppShell() {
       {pwaPrompt && (
         <div className="sans" style={{ position: 'fixed', bottom: 96, left: 24, right: 24, maxWidth: 380, margin: '0 auto', background: 'rgba(15,15,15,0.97)', backdropFilter: 'blur(20px)', border: '1px solid rgba(200,150,60,0.3)', borderRadius: 16, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, zIndex: 9998, boxShadow: '0 8px 32px rgba(0,0,0,0.4)', animation: 'slideUp 0.3s ease' }}>
           <div>
-            <div style={{ color: 'white', fontWeight: 700, fontSize: 14, marginBottom: 2 }}>📱 Installér Costa Drive Club</div>
+            <div style={{ color: 'white', fontWeight: 700, fontSize: 14, marginBottom: 2 }}>📱 Installér Soluxe</div>
             <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: 12 }}>Hurtig adgang fra din startskærm</div>
           </div>
           <div style={{ display: 'flex', gap: 8, flexShrink: 0 }}>

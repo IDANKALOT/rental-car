@@ -36,7 +36,7 @@ export default function Footer() {
             {/* Contact info */}
             <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>Avenida del Mar 24, Marbella</div>
-              <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>hej@costadriveclub.es</div>
+              <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>info@soluxecars.com</div>
               <div className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>+34 600 000 000</div>
             </div>
 
@@ -93,7 +93,7 @@ export default function Footer() {
           gap: 12,
         }}>
           <span className="sans" style={{ color: 'rgba(255,255,255,0.16)', fontSize: 12 }}>
-            © 2025 Costa Drive Club. {t.footer.rights}. CVR: DK-XXXXXXXX
+            © 2025 Soluxe. {t.footer.rights}.
           </span>
           <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
             {['SSL', 'GDPR', 'PCI DSS'].map((b) => (

@@ -257,7 +257,7 @@ export default function Navbar() {
             {/* Contact strip */}
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>
-                Costa Drive Club · Marbella
+                Soluxe · Marbella
               </span>
               <span className="sans" style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>
                 +34 600 000 000

@@ -493,7 +493,7 @@ export default function BookingFlow() {
         {/* Header */}
         <div style={{ padding: '20px 24px 16px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
           <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, fontSize: 20, color: 'white' }}>
-            🌊 <span className="shimmer-text">Costa Drive Club</span>
+            Soluxe
           </div>
           <button onClick={closeBookingFlow} style={{ background: 'rgba(255,255,255,0.08)', border: 'none', color: 'rgba(255,255,255,0.6)', borderRadius: '50%', width: 34, height: 34, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
         </div>

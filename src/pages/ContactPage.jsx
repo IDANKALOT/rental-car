@@ -70,7 +70,7 @@ export default function ContactPage() {
             <div style={{ background: 'white', borderRadius: 20, padding: 24, boxShadow: 'var(--shadow-sm)' }}>
               <InfoRow icon="📍" label={t.contact.address} value="Avenida del Mar 24, 29602 Marbella, España" />
               <InfoRow icon="📞" label="Telefon" value="+34 600 000 000" />
-              <InfoRow icon="✉️" label="E-mail" value="hej@costadriveclub.es" />
+              <InfoRow icon="✉️" label="E-mail" value="info@soluxecars.com" />
               <InfoRow icon="🕒" label={t.contact.openHours} value={t.contact.hours} last />
               <button className="sans" onClick={() => setShowWhatsApp(true)}
                 style={{ width: '100%', background: '#25D366', border: 'none', color: 'white', borderRadius: 12, padding: 12, fontSize: 14, fontWeight: 600, cursor: 'pointer', marginTop: 16 }}>
