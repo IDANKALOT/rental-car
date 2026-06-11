@@ -1,8 +1,8 @@
 import logoImg from '../../logo.png';
 
 export default function Logo({ onClick, size = 'md' }) {
-  const heights = { sm: 28, md: 36, lg: 48 };
-  const textSizes = { sm: 14, md: 17, lg: 22 };
+  const heights = { sm: 36, md: 52, lg: 72 };
+  const textSizes = { sm: 15, md: 19, lg: 26 };
   const h = heights[size] || heights.md;
   const fs = textSizes[size] || textSizes.md;
   return (
