@@ -93,18 +93,26 @@ export const LOCATIONS = ['Málaga Lufthavn', 'Málaga Centrum', 'Marbella', 'Fu
 
 export function daysBetween(a, b) {
   if (!a || !b) return 1;
-  const d = Math.ceil((new Date(b) - new Date(a)) / 86400000);
+  const d = Math.round((new Date(b) - new Date(a)) / 86400000);
   return d > 0 ? d : 1;
 }
 
 export function getEffectivePrice(car, pickDate, days) {
   if (!car) return 0;
-  if (car.highSeasonPrice && pickDate) {
+  const base = Number(car.price) || 0;
+  const weekly = car.weeklyPrice ? Number(car.weeklyPrice) : null;
+  const high = car.highSeasonPrice ? Number(car.highSeasonPrice) : null;
+
+  // Weekly rate has priority — 7+ days always gives the discounted weekly rate
+  if (weekly && days >= 7) return weekly;
+
+  // High season (July = month 6, August = month 7)
+  if (high && pickDate) {
     const m = new Date(pickDate).getMonth();
-    if (m === 6 || m === 7) return Number(car.highSeasonPrice);
+    if (m === 6 || m === 7) return high;
   }
-  if (car.weeklyPrice && days >= 7) return Number(car.weeklyPrice);
-  return Number(car.price) || 0;
+
+  return base;
 }
 
 export function lowestPrice(car) {

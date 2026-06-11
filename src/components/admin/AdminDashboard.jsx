@@ -4,9 +4,59 @@ import { CATEGORIES, AVAILABILITY_STATES } from '../../data/cars';
 import { DISCOUNT_CODES } from '../../data/extras';
 import { AvailabilityBadge } from '../ui/Badge';
 
-const EMOJI_CHOICES  = ['🚗','🚙','🏎️','🚐','✨','🚕','🛻','⚡'];
-const COLOR_CHOICES  = ['#2563eb','#7c3aed','#db2777','#d97706','#059669','#0891b2','#dc2626','#0f172a'];
-const emptyCar = { type: 'Economy', name: '', price: '', weeklyPrice: '', highSeasonPrice: '', emoji: '🚗', badge: '', color: '#2563eb', features: '', image: '', availability: 'available', featured: false };
+const EMOJI_CHOICES       = ['🚗','🚙','🏎️','🚐','✨','🚕','🛻','⚡'];
+const COLOR_CHOICES       = ['#2563eb','#7c3aed','#db2777','#d97706','#059669','#0891b2','#dc2626','#0f172a'];
+const TRANSMISSION_OPTS   = ['Manuel', 'Automatik', 'Semi-automatik'];
+const FUEL_OPTS           = ['Benzin', 'Diesel', 'Hybrid', 'El'];
+const DOOR_OPTS           = [2, 3, 4, 5];
+const CUR_YEAR            = new Date().getFullYear();
+
+const emptyCar = {
+  type: 'Economy', name: '', price: '', weeklyPrice: '', highSeasonPrice: '',
+  emoji: '🚗', badge: '', color: '#2563eb', features: [], image: '',
+  availability: 'available', featured: false,
+  transmission: 'Manuel', fuel: 'Benzin', year: CUR_YEAR, doors: 5, luggage: 2, seats: 5,
+};
+
+/* ── Features chip input ─────────────────────────────────────────────────────── */
+function FeaturesInput({ features, onChange }) {
+  const [input, setInput] = useState('');
+  const arr = Array.isArray(features) ? features : [];
+
+  function tryAdd(raw) {
+    const val = raw.trim().replace(/,+$/, '');
+    if (val && !arr.includes(val)) onChange([...arr, val]);
+    setInput('');
+  }
+
+  function onKey(e) {
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); tryAdd(input); }
+    if (e.key === 'Backspace' && !input && arr.length) onChange(arr.slice(0, -1));
+  }
+
+  return (
+    <div
+      onClick={(e) => e.currentTarget.querySelector('input')?.focus()}
+      style={{ border: '1px solid rgba(0,0,0,0.1)', borderRadius: 'var(--r)', padding: '8px 10px', background: '#fafaf8', minHeight: 44, cursor: 'text', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}
+    >
+      {arr.map((f) => (
+        <span key={f} className="sans" style={{ background: 'rgba(200,150,60,0.13)', border: '1px solid rgba(200,150,60,0.28)', borderRadius: 100, padding: '3px 8px 3px 11px', fontSize: 12, color: '#555', display: 'flex', alignItems: 'center', gap: 5 }}>
+          {f}
+          <button onClick={(e) => { e.stopPropagation(); onChange(arr.filter((x) => x !== f)); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#999', fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>
+        </span>
+      ))}
+      <input
+        className="sans"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={onKey}
+        onBlur={() => { if (input.trim()) tryAdd(input); }}
+        placeholder={arr.length ? '+ Tilføj...' : 'A/C, GPS, Barnesæde... (Enter for at tilføje)'}
+        style={{ border: 'none', outline: 'none', background: 'transparent', fontSize: 13, color: '#333', flexGrow: 1, minWidth: 120, padding: '2px 4px' }}
+      />
+    </div>
+  );
+}
 
 function StatCard({ icon, label, value, sub, color = 'var(--gold)' }) {
   return (
@@ -96,7 +146,11 @@ function FleetTab({ carList, addCar, updateCar, deleteCar, setAvailability, togg
       weeklyPrice: form.weeklyPrice ? Number(form.weeklyPrice) : null,
       highSeasonPrice: form.highSeasonPrice ? Number(form.highSeasonPrice) : null,
       badge: form.badge || form.type,
-      features: typeof form.features === 'string' ? form.features.split(',').map((s) => s.trim()).filter(Boolean) : form.features,
+      features: Array.isArray(form.features) ? form.features : form.features.split(',').map((s) => s.trim()).filter(Boolean),
+      year: Number(form.year) || CUR_YEAR,
+      doors: Number(form.doors) || 5,
+      luggage: Number(form.luggage) || 2,
+      seats: Number(form.seats) || 5,
     };
     if (editingId) { updateCar({ ...payload, id: editingId }); flashMsg('✅ Bil opdateret'); }
     else { addCar(payload); flashMsg('✅ Bil oprettet!'); }
@@ -105,7 +159,19 @@ function FleetTab({ carList, addCar, updateCar, deleteCar, setAvailability, togg
 
   function startEdit(car) {
     setEditingId(car.id);
-    setForm({ ...car, price: String(car.price), weeklyPrice: car.weeklyPrice ? String(car.weeklyPrice) : '', highSeasonPrice: car.highSeasonPrice ? String(car.highSeasonPrice) : '', features: Array.isArray(car.features) ? car.features.join(', ') : car.features });
+    setForm({
+      ...car,
+      price: String(car.price),
+      weeklyPrice: car.weeklyPrice ? String(car.weeklyPrice) : '',
+      highSeasonPrice: car.highSeasonPrice ? String(car.highSeasonPrice) : '',
+      features: Array.isArray(car.features) ? [...car.features] : car.features.split(',').map((s) => s.trim()).filter(Boolean),
+      transmission: car.transmission || 'Manuel',
+      fuel: car.fuel || 'Benzin',
+      year: String(car.year || CUR_YEAR),
+      doors: String(car.doors || 5),
+      luggage: String(car.luggage || 2),
+      seats: String(car.seats || 5),
+    });
     setImgMode(car.image && !car.image.startsWith('data:') ? 'url' : 'upload');
     window.scrollTo({ top: 100, behavior: 'smooth' });
   }
@@ -122,7 +188,40 @@ function FleetTab({ carList, addCar, updateCar, deleteCar, setAvailability, togg
           <Lf label="Kategori"><select className="linp sans" value={form.type} onChange={set('type')}>{CATEGORIES.map((c) => <option key={c}>{c}</option>)}</select></Lf>
           <Lf label="Badge"><input className="linp sans" value={form.badge} onChange={set('badge')} placeholder="Populær" /></Lf>
         </div>
-        <Lf label="Udstyr (komma-adskilt)"><input className="linp sans" value={form.features} onChange={set('features')} placeholder="5 sæder, Automatik, A/C" /></Lf>
+        <Lf label="Udstyr (tryk Enter for at tilføje)">
+          <FeaturesInput features={form.features} onChange={(v) => setForm((p) => ({ ...p, features: v }))} />
+        </Lf>
+
+        {/* Car specs */}
+        <div style={{ background: '#f0f4ff', border: '1px solid rgba(37,99,235,0.18)', borderRadius: 12, padding: 14, marginBottom: 14 }}>
+          <div className="sans" style={{ fontSize: 10, color: '#2563eb', textTransform: 'uppercase', letterSpacing: '1.5px', fontWeight: 700, marginBottom: 12 }}>🔧 Bilspecifikationer</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <Lf label="Gearkasse">
+              <select className="linp sans" value={form.transmission} onChange={set('transmission')}>
+                {TRANSMISSION_OPTS.map((v) => <option key={v}>{v}</option>)}
+              </select>
+            </Lf>
+            <Lf label="Brændstof">
+              <select className="linp sans" value={form.fuel} onChange={set('fuel')}>
+                {FUEL_OPTS.map((v) => <option key={v}>{v}</option>)}
+              </select>
+            </Lf>
+            <Lf label="Sæder">
+              <input type="number" min={2} max={9} className="linp sans" value={form.seats} onChange={set('seats')} />
+            </Lf>
+            <Lf label="Dørantal">
+              <select className="linp sans" value={form.doors} onChange={set('doors')}>
+                {DOOR_OPTS.map((v) => <option key={v} value={v}>{v}</option>)}
+              </select>
+            </Lf>
+            <Lf label="Årsmodel">
+              <input type="number" min={2010} max={2030} className="linp sans" value={form.year} onChange={set('year')} />
+            </Lf>
+            <Lf label="Bagageplads (antal kufferter)">
+              <input type="number" min={1} max={10} className="linp sans" value={form.luggage} onChange={set('luggage')} />
+            </Lf>
+          </div>
+        </div>
 
         {/* Pricing */}
         <div style={{ background: '#fffbf2', border: '1px solid rgba(200,150,60,0.25)', borderRadius: 12, padding: 14, marginBottom: 14 }}>
