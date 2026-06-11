@@ -91,7 +91,7 @@ export default function Navbar() {
         padding: '0 5%',
       }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
-          <Logo onClick={() => goTo('home')} />
+          <Logo onClick={() => goTo('home')} size="lg" />
 
           {/* Desktop nav links */}
           <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
