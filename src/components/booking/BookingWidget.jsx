@@ -41,7 +41,8 @@ export default function BookingWidget({ onSearch }) {
         boxShadow: '0 24px 64px rgba(0,0,0,0.4)',
       }}
     >
-      <div className="booking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
+      {/* Location row — stacks to 1 col on mobile */}
+      <div className="booking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 12 }}>
         <Field label={t.booking.pickup}>
           <select className="inp sans" value={draft.pickup} onChange={set('pickup')}>
             <option value="" disabled>{t.booking.placeholder}</option>
@@ -54,11 +55,17 @@ export default function BookingWidget({ onSearch }) {
             {LOCATIONS.map((l) => <option key={l} value={l}>{l}</option>)}
           </select>
         </Field>
+      </div>
+
+      {/* Date row — always 2 cols so both date pickers stay side by side */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
         <Field label={t.booking.pickDate}>
-          <input type="date" className="inp sans" value={draft.pickDate} onChange={set('pickDate')} />
+          <input type="date" className="inp sans" value={draft.pickDate} onChange={set('pickDate')}
+            style={{ width: '100%', minHeight: 48 }} />
         </Field>
         <Field label={t.booking.returnDate}>
-          <input type="date" className="inp sans" value={draft.returnDate} onChange={set('returnDate')} />
+          <input type="date" className="inp sans" value={draft.returnDate} onChange={set('returnDate')}
+            style={{ width: '100%', minHeight: 48 }} />
         </Field>
       </div>
       <button
